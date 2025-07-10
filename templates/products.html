@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Store - รายการเกม</title>
+    <link rel="stylesheet" href="/css/sb-admin-2.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #18191a 0%, #23272f 100%);
+            color: #f1f1f1;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        /* Navbar */
+        .navbar {
+            width: 100%;
+            background: #18191aee;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 16px;
+            height: 64px;
+            box-shadow: 0 2px 16px #00000044;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .navbar-logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #4e73df;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 12px #000, 0 1px 2px #4e73df99;
+        }
+        .navbar-menu {
+            display: flex;
+            gap: 24px;
+        }
+        .navbar-menu a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 500;
+            padding: 8px 18px;
+            border-radius: 8px;
+            transition: background 0.18s, color 0.18s;
+        }
+        .navbar-menu a:hover {
+            background: #4e73df;
+            color: #fff;
+        }
+        .navbar-actions {
+            display: flex;
+            gap: 12px;
+            margin-right: 24px;
+            padding-right: 8px;
+        }
+        .navbar-actions button {
+            background: #23272f;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 18px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.18s, color 0.18s;
+        }
+        .navbar-actions button:hover {
+            background: #4e73df;
+            color: #fff;
+        }
+        .navbar-actions a.nav-btn {
+            background: #23272f;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 18px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.18s, color 0.18s;
+            display: inline-block;
+            text-align: center;
+        }
+        .navbar-actions a.nav-btn:hover {
+            background: #4e73df;
+            color: #fff;
+        }
+        /* Banner */
+        .banner {
+            width: 100%;
+            max-width: 1200px;
+            margin: 32px auto 24px auto;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 8px 48px #00000066;
+            background: linear-gradient(90deg, #23272f 60%, #4e73df 100%);
+            display: flex;
+            align-items: center;
+            min-height: 180px;
+            position: relative;
+            box-sizing: border-box;
+        }
+        .banner-content {
+            padding: 36px 48px;
+        }
+        .banner-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 12px #000;
+        }
+        .banner-desc {
+            font-size: 1.2rem;
+            color: #b0b3b8;
+        }
+        .banner-img {
+            height: 160px;
+            margin-left: auto;
+            margin-right: 32px;
+            filter: drop-shadow(0 4px 24px #4e73df99);
+        }
+        /* Search bar */
+        .search-bar-wrap {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 32px;
+            margin-top: 0;
+        }
+        .search-bar {
+            width: 100%;
+            max-width: 340px;
+            padding: 12px 20px;
+            border-radius: 32px;
+            border: none;
+            background: #23272f;
+            color: #fff;
+            font-size: 1.1rem;
+            box-shadow: 0 2px 12px #00000022;
+            outline: none;
+            transition: box-shadow 0.18s, background 0.18s;
+        }
+        .search-bar:focus {
+            background: #18191a;
+            box-shadow: 0 4px 24px #00000044;
+        }
+        /* Game list */
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto 32px auto;
+            padding: 0 16px;
+            box-sizing: border-box;
+        }
+        h1 {
+            text-align: left;
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin: 36px 0 18px 0;
+            letter-spacing: 2px;
+            color: #fff;
+            text-shadow: 0 4px 24px #000, 0 2px 8px #222;
+        }
+        .announce-bar {
+            width: 100%;
+            background: #23272f;
+            color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px #00000022;
+            padding: 0;
+            margin-bottom: 32px;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+        .announce-label {
+            background: #18191a;
+            color: #4e73df;
+            font-weight: bold;
+            font-size: 1.08rem;
+            border-radius: 12px 0 0 12px;
+            padding: 0 22px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            border-right: 2px solid #4e73df44;
+            z-index: 2;
+        }
+        .announce-marquee-wrap {
+            flex: 1;
+            overflow: hidden;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+        .announce-marquee {
+            white-space: nowrap;
+            display: inline-block;
+            animation: marquee 18s linear infinite;
+            font-size: 1.08rem;
+            padding-left: 100%;
+        }
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+        .game-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 32px;
+            justify-content: center;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .game-card {
+            background: linear-gradient(135deg, #23272f 60%, #4e73df 100%);
+            border-radius: 18px;
+            box-shadow: 0 4px 32px rgba(0,0,0,0.45), 0 0 16px #a084ff33;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.18s, box-shadow 0.18s;
+            position: relative;
+        }
+        .game-card:hover {
+            transform: translateY(-8px) scale(1.06) rotate(-1deg);
+            box-shadow: 0 16px 48px #a084ffcc, 0 2px 16px #00000099, 0 0 32px #a084ff88;
+        }
+        .game-badge {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            background: linear-gradient(90deg, #a084ff 0%, #4e73df 100%);
+            color: #fff;
+            font-size: 0.95rem;
+            font-weight: bold;
+            padding: 4px 16px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px #00000033;
+            z-index: 2;
+            letter-spacing: 1px;
+        }
+        .game-badge.sale { background: linear-gradient(90deg, #ff5e62 0%, #ff9966 100%); }
+        .game-badge.hot { background: linear-gradient(90deg, #43cea2 0%, #185a9d 100%); }
+        .game-cover {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            background: #222;
+            border-bottom: 1px solid #222;
+        }
+        .game-info {
+            flex: 1;
+            padding: 20px 18px 16px 18px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .game-title {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 8px #000;
+        }
+        .game-price {
+            font-size: 1.1rem;
+            color: #a084ff;
+            font-weight: bold;
+            margin-bottom: 14px;
+        }
+        .game-card .btn-detail {
+            align-self: flex-start;
+            padding: 8px 22px;
+            background: #4e73df;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            text-decoration: none;
+            transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+            box-shadow: 0 2px 8px #a084ff44, 0 0 12px #a084ff88;
+            filter: drop-shadow(0 0 8px #a084ff88);
+            margin-top: auto;
+        }
+        .game-card .btn-detail:hover {
+            background: #fff;
+            color: #4e73df;
+            box-shadow: 0 4px 16px #a084ff99, 0 0 24px #fff;
+            filter: drop-shadow(0 0 16px #fff);
+        }
+        /* Stats */
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 36px;
+            margin: 48px 0 0 0;
+            flex-wrap: wrap;
+        }
+        .stat-box {
+            background: #23272f;
+            border-radius: 16px;
+            box-shadow: 0 2px 16px #00000033;
+            padding: 24px 36px;
+            min-width: 180px;
+            text-align: center;
+        }
+        .stat-label {
+            color: #b0b3b8;
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+        .stat-value {
+            color: #4e73df;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        .footer {
+            width: 100%;
+            background: #18191a;
+            color: #b0b3b8;
+            text-align: center;
+            padding: 32px 0 16px 0;
+            font-size: 1rem;
+            margin-top: 48px;
+            letter-spacing: 1px;
+        }
+        #scrollTopBtn {
+            position: fixed;
+            right: 24px;
+            bottom: 32px;
+            background: #4e73df;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            font-size: 2rem;
+            box-shadow: 0 4px 16px #00000055;
+            cursor: pointer;
+            display: none;
+            z-index: 100;
+            transition: background 0.18s, box-shadow 0.18s;
+        }
+        #scrollTopBtn:hover {
+            background: #a084ff;
+            box-shadow: 0 8px 32px #4e73df99;
+        }
+        @media (max-width: 600px) {
+            .navbar { flex-direction: column; height: auto; padding: 8px 8px; }
+            .navbar-logo { font-size: 1.3rem; }
+            .banner { flex-direction: column; min-height: 120px; }
+            .banner-content { padding: 18px 12px; }
+            .banner-img { height: 80px; margin: 0; }
+            h1 { font-size: 1.3rem; }
+            .container { padding: 0 6px; }
+            .game-info { padding: 10px 6px 8px 6px; }
+            .stats { gap: 12px; }
+            .stat-box { padding: 12px 10px; min-width: 100px; }
+        }
+        html {
+          scroll-behavior: smooth;
+        }
+        #particles {
+            position: fixed;
+            left: 0; top: 0; width: 100vw; height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="particles"></canvas>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="/products/" class="navbar-logo" style="text-decoration:none; cursor:pointer;">GAME<span style="color:#a084ff">ZONE</span></a>
+        <div class="navbar-menu">
+            <a href="#">หน้าหลัก</a>
+            <a href="#gameList">สินค้า</a>
+            <a href="/topup/">เติมเงิน</a>
+            <a href="/sales/">ตลาดมือสอง</a>
+        </div>
+        <div class="navbar-actions" style="gap:18px;align-items:center;">
+            <span class="user-dropdown-wrap" style="position:relative;display:inline-block;">
+                <span id="userDropdownBtn" style="cursor:pointer;display:inline-flex;align-items:center;gap:6px;">
+                    <svg width="22" height="22" fill="#fff" viewBox="0 0 24 24" style="vertical-align:middle;"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 16-4 16 0"/></svg>
+                    <span style="font-size:1.02rem;">บัญชีของฉัน</span>
+                    <span style="font-size:0.98rem;color:#a084ff;font-weight:bold;margin-left:6px;">0.00 ฿</span>
+                    <svg width="14" height="14" fill="#fff" viewBox="0 0 20 20" style="margin-left:2px;"><path d="M5 8l5 5 5-5"/></svg>
+                </span>
+                <div id="userDropdownMenu" style="display:none;position:absolute;right:0;top:calc(100% + 8px);background:#23272f;border-radius:12px;box-shadow:0 2px 16px #00000033;padding:16px 0;min-width:160px;z-index:100;">
+                    <a href="/login" style="display:block;padding:10px 24px;color:#fff;text-decoration:none;font-size:1.08rem;transition:background 0.15s;">เข้าสู่ระบบ</a>
+                    <a href="/register" style="display:block;padding:10px 24px;color:#fff;text-decoration:none;font-size:1.08rem;transition:background 0.15s;">สมัครสมาชิก</a>
+                </div>
+            </span>
+        </div>
+    </nav>
+    <!-- Banner -->
+    <div class="banner">
+        <div class="banner-content">
+            <div class="banner-title">โปรโมชั่นพิเศษ! เกมใหม่ลดสูงสุด 50%</div>
+            <div class="banner-desc">ซื้อเกมแท้ ปลอดภัย ได้คีย์ทันที มีทีมงานดูแล 24 ชม.</div>
+        </div>
+    </div>
+    <div class="container">
+        <h1>รายการเกม</h1>
+        <div class="announce-bar">
+            <div class="announce-label">ประกาศ</div>
+            <div class="announce-marquee-wrap">
+                <span class="announce-marquee">ร้านขายเกมมือ 1 ที่ราคาถูกที่สุดในไทย !!!!</span>
+            </div>
+        </div>
+        <div class="search-bar-wrap">
+            <input type="text" id="searchInput" class="search-bar" placeholder="ค้นหาเกม...">
+        </div>
+        <div class="game-list" id="gameList">
+            <div class="game-card">
+                <span class="game-badge">ใหม่</span>
+                <img class="game-cover" src="/static/img/x01.jpg" alt="Resident evil 2 remake">
+                <div class="game-info">
+                    <div class="game-title">Resident evil 2 remake</div>
+                    <div class="game-price">
+                        <span style="color:#b0b3b8;text-decoration:line-through;font-size:0.98em;">฿1,199</span>
+                        <span style="color:#a084ff;font-size:1.18em;font-weight:bold;margin-left:8px;">฿839</span>
+                    </div>
+                    <a class="btn-detail" href="/product-info/?id=1">ดูรายละเอียด</a>
+                </div>
+            </div>
+            <div class="game-card">
+                <span class="game-badge sale">ลด 30%</span>
+                <img class="game-cover" src="/static/img/x12.jpg" alt="Elden ring">
+                <div class="game-info">
+                    <div class="game-title">Elden ring</div>
+                    <div class="game-price">
+                        <span style="color:#b0b3b8;text-decoration:line-through;font-size:0.98em;">฿1,790</span>
+                        <span style="color:#a084ff;font-size:1.18em;font-weight:bold;margin-left:8px;">฿1,253</span>
+                    </div>
+                    <a class="btn-detail" href="/product-info/?id=2">ดูรายละเอียด</a>
+                </div>
+            </div>
+            <div class="game-card">
+                <span class="game-badge hot">ขายดี</span>
+                <img class="game-cover" src="/static/img/x13.jpg" alt="Grand theft auto 5">
+                <div class="game-info">
+                    <div class="game-title">Grand theft auto 5</div>
+                    <div class="game-price">
+                        <span style="color:#b0b3b8;text-decoration:line-through;font-size:0.98em;">฿749</span>
+                        <span style="color:#a084ff;font-size:1.18em;font-weight:bold;margin-left:8px;">฿524</span>
+                    </div>
+                    <a class="btn-detail" href="/product-info/?id=3">ดูรายละเอียด</a>
+                </div>
+            </div>
+            <div class="game-card">
+                <span class="game-badge sale">ลด 30%</span>
+                <img class="game-cover" src="/static/img/x14.jpg" alt="Core Keeper">
+                <div class="game-info">
+                    <div class="game-title">Core Keeper</div>
+                    <div class="game-price">
+                        <span style="color:#b0b3b8;text-decoration:line-through;font-size:0.98em;">฿289</span>
+                        <span style="color:#a084ff;font-size:1.18em;font-weight:bold;margin-left:8px;">฿202</span>
+                    </div>
+                    <a class="btn-detail" href="/product-info/?id=4">ดูรายละเอียด</a>
+                </div>
+            </div>
+            <div class="game-card">
+                <span class="game-badge sale">ลด 30%</span>
+                <img class="game-cover" src="/static/img/x15.jpg" alt="Minecraft">
+                <div class="game-info">
+                    <div class="game-title">Minecraft</div>
+                    <div class="game-price">
+                        <span style="color:#b0b3b8;text-decoration:line-through;font-size:0.98em;">฿1,120</span>
+                        <span style="color:#a084ff;font-size:1.18em;font-weight:bold;margin-left:8px;">฿784</span>
+                    </div>
+                    <a class="btn-detail" href="/product-info/?id=5">ดูรายละเอียด</a>
+                </div>
+            </div>
+            <div class="game-card">
+                <span class="game-badge sale">ลด 30%</span>
+                <img class="game-cover" src="/static/img/x16.jpg" alt="Green Hell">
+                <div class="game-info">
+                    <div class="game-title">Green Hell</div>
+                    <div class="game-price">
+                        <span style="color:#b0b3b8;text-decoration:line-through;font-size:0.98em;">฿369</span>
+                        <span style="color:#a084ff;font-size:1.18em;font-weight:bold;margin-left:8px;">฿258</span>
+                    </div>
+                    <a class="btn-detail" href="/product-info/?id=6">ดูรายละเอียด</a>
+                </div>
+            </div>
+            <div class="game-card">
+                <span class="game-badge sale">ลด 30%</span>
+                <img class="game-cover" src="/static/img/x17.jpg" alt="Prototype 2">
+                <div class="game-info">
+                    <div class="game-title">Prototype 2</div>
+                    <div class="game-price">
+                        <span style="color:#b0b3b8;text-decoration:line-through;font-size:0.98em;">฿699</span>
+                        <span style="color:#a084ff;font-size:1.18em;font-weight:bold;margin-left:8px;">฿489</span>
+                    </div>
+                    <a class="btn-detail" href="/product-info/?id=7">ดูรายละเอียด</a>
+                </div>
+            </div>
+            <div class="game-card">
+                <span class="game-badge sale">ลด 30%</span>
+                <img class="game-cover" src="/static/img/x18.jpg" alt="Death stranding">
+                <div class="game-info">
+                    <div class="game-title">Death stranding</div>
+                    <div class="game-price">
+                        <span style="color:#b0b3b8;text-decoration:line-through;font-size:0.98em;">฿1,390</span>
+                        <span style="color:#a084ff;font-size:1.18em;font-weight:bold;margin-left:8px;">฿973</span>
+                    </div>
+                    <a class="btn-detail" href="/product-info/?id=8">ดูรายละเอียด</a>
+                </div>
+            </div>
+            <!-- เพิ่มเกมใหม่ได้โดย copy block นี้ -->
+        </div>
+    </div>
+    <button id="scrollTopBtn" title="กลับขึ้นบน">↑</button>
+    <script>
+    // Search filter
+    document.getElementById('searchInput').addEventListener('input', function() {
+        const val = this.value.toLowerCase();
+        document.querySelectorAll('.game-card').forEach(card => {
+            const title = card.querySelector('.game-title').textContent.toLowerCase();
+            card.style.display = title.includes(val) ? '' : 'none';
+        });
+    });
+    // Scroll to top button
+    const scrollBtn = document.getElementById('scrollTopBtn');
+    window.addEventListener('scroll', function() {
+        scrollBtn.style.display = window.scrollY > 200 ? 'block' : 'none';
+    });
+    scrollBtn.onclick = () => window.scrollTo({top:0, behavior:'smooth'});
+    </script>
+    <script>
+    // Dropdown user menu
+    const userBtn = document.getElementById('userDropdownBtn');
+    const userMenu = document.getElementById('userDropdownMenu');
+    let dropdownOpen = false;
+    userBtn.onclick = function(e) {
+        e.stopPropagation();
+        dropdownOpen = !dropdownOpen;
+        userMenu.style.display = dropdownOpen ? 'block' : 'none';
+    };
+    document.addEventListener('click', function(e) {
+        if(dropdownOpen) {
+            userMenu.style.display = 'none';
+            dropdownOpen = false;
+        }
+    });
+    userMenu.onclick = function(e) { e.stopPropagation(); };
+    </script>
+    <script>
+    // Particle background (เหมือนหน้า welcome)
+    const canvas = document.createElement('canvas');
+    canvas.id = 'particles';
+    document.body.prepend(canvas);
+    const ctx = canvas.getContext('2d');
+    let w = window.innerWidth, h = window.innerHeight;
+    canvas.width = w; canvas.height = h;
+    let particles = Array.from({length: 36}, () => ({
+        x: Math.random()*w,
+        y: Math.random()*h,
+        r: Math.random()*2+1,
+        dx: (Math.random()-0.5)*0.5,
+        dy: (Math.random()-0.5)*0.5,
+        o: Math.random()*0.5+0.2
+    }));
+    function drawParticles() {
+        ctx.clearRect(0,0,w,h);
+        for(const p of particles) {
+            ctx.beginPath();
+            ctx.arc(p.x,p.y,p.r,0,2*Math.PI);
+            ctx.fillStyle = `rgba(168,132,255,${p.o})`;
+            ctx.shadowColor = '#a084ff';
+            ctx.shadowBlur = 8;
+            ctx.fill();
+            ctx.shadowBlur = 0;
+        }
+    }
+    function updateParticles() {
+        for(const p of particles) {
+            p.x += p.dx; p.y += p.dy;
+            if(p.x<0||p.x>w) p.x = Math.random()*w;
+            if(p.y<0||p.y>h) p.y = Math.random()*h;
+        }
+    }
+    function animate() {
+        drawParticles();
+        updateParticles();
+        requestAnimationFrame(animate);
+    }
+    animate();
+    window.addEventListener('resize',()=>{
+        w = window.innerWidth; h = window.innerHeight;
+        canvas.width = w; canvas.height = h;
+    });
+    </script>
+</body>
+</html> 

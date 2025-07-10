@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ตลาดขายเกมมือสอง | GAMEZONE</title>
+    <link rel="stylesheet" href="/css/sb-admin-2.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #18191a 0%, #23272f 100%);
+            color: #f1f1f1;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            margin: 0;
+            overflow-x: hidden;
+        }
+        .market-header {
+            max-width: 1200px;
+            margin: 40px auto 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 16px;
+        }
+        .market-title {
+            font-size: 2.2rem;
+            font-weight: bold;
+            background: linear-gradient(90deg, #4e73df 0%, #a084ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
+            text-shadow: 0 2px 12px #a084ff, 0 1px 2px #fff;
+        }
+        .sell-btn {
+            padding: 12px 36px;
+            background: linear-gradient(90deg, #a084ff 60%, #4e73df 100%);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 2px 12px #a084ff44, 0 0 16px #a084ff88;
+            filter: drop-shadow(0 0 12px #a084ff88);
+            transition: background 0.18s, color 0.18s, box-shadow 0.18s, filter 0.18s, transform 0.18s;
+            outline: none;
+        }
+        .sell-btn:hover {
+            background: linear-gradient(90deg, #fff 0%, #a084ff 100%);
+            color: #23272f;
+            box-shadow: 0 4px 24px #a084ff99, 0 0 24px #fff;
+            filter: drop-shadow(0 0 24px #fff);
+            transform: scale(1.06) rotate(-1deg);
+        }
+        .market-list {
+            max-width: 1200px;
+            margin: 32px auto 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 32px;
+            padding: 0 16px;
+        }
+        .market-card {
+            background: linear-gradient(135deg, #23272f 60%, #4e73df 100%);
+            border-radius: 18px;
+            box-shadow: 0 4px 32px rgba(0,0,0,0.45), 0 0 16px #a084ff33;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.18s, box-shadow 0.18s;
+            position: relative;
+        }
+        .market-card:hover {
+            transform: translateY(-8px) scale(1.06) rotate(-1deg);
+            box-shadow: 0 16px 48px #a084ffcc, 0 2px 16px #00000099, 0 0 32px #a084ff88;
+        }
+        .market-img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            background: #222;
+            border-bottom: 1px solid #222;
+        }
+        .market-info {
+            flex: 1;
+            padding: 20px 18px 16px 18px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .market-title2 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 8px #000;
+        }
+        .market-price {
+            font-size: 1.1rem;
+            color: #a084ff;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .market-seller {
+            font-size: 0.98rem;
+            color: #b0b3b8;
+            margin-bottom: 8px;
+        }
+        .market-contact {
+            font-size: 0.98rem;
+            color: #4e73df;
+            margin-bottom: 8px;
+        }
+        .market-detail-btn {
+            align-self: flex-start;
+            padding: 8px 22px;
+            background: #4e73df;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            text-decoration: none;
+            transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+            box-shadow: 0 2px 8px #a084ff44, 0 0 12px #a084ff88;
+            filter: drop-shadow(0 0 8px #a084ff88);
+            margin-top: auto;
+        }
+        .market-detail-btn:hover {
+            background: #fff;
+            color: #4e73df;
+            box-shadow: 0 4px 16px #a084ff99, 0 0 24px #fff;
+            filter: drop-shadow(0 0 16px #fff);
+        }
+        /* Popup */
+        .popup-bg {
+            display: none;
+            position: fixed;
+            left: 0; top: 0; width: 100vw; height: 100vh;
+            background: rgba(24,25,26,0.85);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        .popup {
+            background: #23272f;
+            border-radius: 18px;
+            box-shadow: 0 4px 32px #a084ff99, 0 0 32px #a084ff33;
+            padding: 36px 32px 28px 32px;
+            min-width: 320px;
+            max-width: 95vw;
+            width: 400px;
+            text-align: left;
+            position: relative;
+        }
+        .popup h2 {
+            font-size: 1.3rem;
+            color: #a084ff;
+            margin-bottom: 18px;
+        }
+        .popup label {
+            display: block;
+            margin-bottom: 6px;
+            color: #b0b3b8;
+            font-size: 1rem;
+        }
+        .popup input, .popup textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: none;
+            background: #18191a;
+            color: #fff;
+            font-size: 1.05rem;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+        }
+        .popup textarea { min-height: 60px; }
+        .popup .popup-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+        .popup .popup-btn {
+            padding: 10px 28px;
+            background: linear-gradient(90deg, #a084ff 60%, #4e73df 100%);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.05rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 2px 8px #a084ff44, 0 0 12px #a084ff88;
+            filter: drop-shadow(0 0 8px #a084ff88);
+            transition: background 0.18s, color 0.18s, box-shadow 0.18s, filter 0.18s, transform 0.18s;
+            outline: none;
+        }
+        .popup .popup-btn:hover {
+            background: linear-gradient(90deg, #fff 0%, #a084ff 100%);
+            color: #23272f;
+            box-shadow: 0 4px 16px #a084ff99, 0 0 24px #fff;
+            filter: drop-shadow(0 0 16px #fff);
+            transform: scale(1.06) rotate(-1deg);
+        }
+        .popup .close-btn {
+            position: absolute;
+            top: 12px; right: 18px;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        @media (max-width: 600px) {
+            .market-header, .market-list { padding: 0 4px; }
+            .market-header { flex-direction: column; gap: 18px; }
+            .market-title { font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+    <div style="max-width:900px;margin:32px auto 0 auto;padding:18px 28px;background:linear-gradient(90deg,#23272f 60%,#ff5e62 100%);color:#fff;border-radius:16px;box-shadow:0 2px 16px #ff5e6244,0 0 12px #a084ff33;font-size:1.13rem;display:flex;align-items:center;gap:16px;">
+        <svg width="28" height="28" fill="#fff" viewBox="0 0 24 24" style="flex-shrink:0;"><circle cx="12" cy="12" r="10" fill="#ff5e62"/><text x="12" y="17" text-anchor="middle" font-size="14" fill="#fff" font-family="Arial" font-weight="bold">!</text></svg>
+        <span>
+            <b>คำเตือน:</b> ตลาดมือสองนี้เป็นพื้นที่สำหรับให้ผู้ใช้บริการประกาศขายและติดต่อซื้อขายกันโดยตรง <br>
+            <span style="color:#ffd580;">เว็บไซต์ GAMEZONE เป็นเพียงระบบอำนวยความสะดวกในการลงประกาศเท่านั้น</span> กรุณาตรวจสอบข้อมูลผู้ขายและสินค้าให้รอบคอบ <b>ระวังมิจฉาชีพ</b> และธุรกรรมที่อาจก่อให้เกิดความเสียหาย <br>
+            <span style="color:#ffb3b3;">ทีมงานขอแนะนำให้ใช้วิจารณญาณและติดต่อซื้อขายอย่างปลอดภัย</span>
+        </span>
+    </div>
+    <div class="market-header">
+        <div class="market-title">ตลาดขายเกมมือสอง</div>
+        <button class="sell-btn" onclick="openPopup()">+ ลงขายสินค้า</button>
+    </div>
+    <div class="market-list" id="marketList">
+        <!-- Card ตัวอย่าง -->
+    </div>
+    <!-- Popup ลงขาย -->
+    <div class="popup-bg" id="popupBg">
+        <div class="popup">
+            <button class="close-btn" onclick="closePopup()">&times;</button>
+            <h2>ลงขายสินค้า</h2>
+            <label>ชื่อสินค้า</label>
+            <input type="text" id="inputName" placeholder="เช่น GTA V Steam Key">
+            <label>ราคา (บาท)</label>
+            <input type="number" id="inputPrice" placeholder="เช่น 500">
+            <label>รายละเอียด</label>
+            <textarea id="inputDesc" placeholder="รายละเอียดสินค้า"></textarea>
+            <label>ช่องทางติดต่อ</label>
+            <input type="text" id="inputContact" placeholder="เช่น Line, Facebook, เบอร์โทร">
+            <label>ลิงก์รูปภาพ (URL)</label>
+            <input type="text" id="inputImg" placeholder="เช่น https://...">
+            <div class="popup-actions">
+                <button class="popup-btn" onclick="submitSale()">โพสต์ขาย</button>
+                <button class="popup-btn" onclick="closePopup()">ยกเลิก</button>
+            </div>
+        </div>
+    </div>
+    <script>
+    // Mockup data
+    let sales = [
+        {name:'GTA V Steam Key', price:500, desc:'คีย์แท้ ส่งไว', contact:'Line: gamer123', img:'https://cdn.cloudflare.steamstatic.com/steam/apps/271590/header.jpg', seller:'ผู้ใช้ทั่วไป'},
+        {name:'Elden Ring Deluxe', price:1200, desc:'แถม DLC ครบ', contact:'FB: eldenking', img:'https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/header.jpg', seller:'EldenKing'},
+        {name:'Minecraft Java', price:700, desc:'บัญชี Mojang', contact:'Line: minecrafter', img:'https://cdn.cloudflare.steamstatic.com/steam/apps/323910/header.jpg', seller:'minecrafter'}
+    ];
+    function renderSales() {
+        const list = document.getElementById('marketList');
+        list.innerHTML = '';
+        for(const s of sales) {
+            list.innerHTML += `
+            <div class="market-card">
+                <img class="market-img" src="${s.img}" alt="${s.name}">
+                <div class="market-info">
+                    <div class="market-title2">${s.name}</div>
+                    <div class="market-price">฿${s.price}</div>
+                    <div class="market-seller">ผู้ขาย: ${s.seller}</div>
+                    <div class="market-contact">ติดต่อ: ${s.contact}</div>
+                    <div style="margin-top:auto;"><button class="market-detail-btn" onclick="alert('ติดต่อผู้ขาย: ${s.contact}')">ดูรายละเอียด</button></div>
+                </div>
+            </div>`;
+        }
+    }
+    renderSales();
+    // Popup logic
+    function openPopup() {
+        document.getElementById('popupBg').style.display = 'flex';
+    }
+    function closePopup() {
+        document.getElementById('popupBg').style.display = 'none';
+    }
+    function submitSale() {
+        const name = document.getElementById('inputName').value.trim();
+        const price = document.getElementById('inputPrice').value.trim();
+        const desc = document.getElementById('inputDesc').value.trim();
+        const contact = document.getElementById('inputContact').value.trim();
+        const img = document.getElementById('inputImg').value.trim() || 'https://cdn.cloudflare.steamstatic.com/steam/apps/271590/header.jpg';
+        if(!name || !price || !desc || !contact) { alert('กรอกข้อมูลให้ครบ'); return; }
+        sales.unshift({name, price, desc, contact, img, seller:'คุณ'});
+        renderSales();
+        closePopup();
+    }
+    </script>
+</body>
+</html> 

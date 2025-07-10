@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>สมัครสมาชิก - GAMEZONE</title>
+    <link rel="stylesheet" href="/css/sb-admin-2.css">
+    <style>
+        body {
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #18191a 0%, #23272f 60%, #222 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .register-container {
+            background: rgba(24,25,26,0.92);
+            border-radius: 24px;
+            box-shadow: 0 8px 48px #00000066;
+            padding: 48px 36px 36px 36px;
+            max-width: 400px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+        .register-title {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 18px;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 12px #a084ff, 0 1px 2px #fff;
+        }
+        .register-form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .register-form input {
+            background: #23272f;
+            border: 1.5px solid #4e73df44;
+            border-radius: 10px;
+            padding: 14px 18px;
+            color: #fff;
+            font-size: 1.08rem;
+            margin-bottom: 2px;
+            box-shadow: 0 2px 12px #00000022;
+            outline: none;
+            transition: box-shadow 0.18s, background 0.18s, border 0.18s;
+        }
+        .register-form input:focus {
+            background: #18191a;
+            border: 1.5px solid #a084ff;
+            box-shadow: 0 4px 24px #a084ff44;
+        }
+        .register-btn {
+            background: linear-gradient(90deg, #a084ff 60%, #4e73df 100%);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            padding: 14px 0;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 8px;
+            box-shadow: 0 2px 12px #a084ff44;
+            transition: background 0.18s, box-shadow 0.18s;
+        }
+        .register-btn:hover {
+            background: linear-gradient(90deg, #fff 0%, #a084ff 100%);
+            color: #23272f;
+            box-shadow: 0 4px 24px #a084ff99;
+        }
+        .login-link {
+            margin-top: 18px;
+            color: #b0b3b8;
+            font-size: 1rem;
+            text-align: center;
+        }
+        .login-link a {
+            color: #a084ff;
+            text-decoration: none;
+            font-weight: bold;
+            margin-left: 4px;
+            transition: color 0.18s;
+        }
+        .login-link a:hover {
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <div class="register-title">สมัครสมาชิก</div>
+        <form class="register-form" autocomplete="off" onsubmit="return false;">
+            <input type="text" placeholder="ชื่อผู้ใช้" required>
+            <input type="email" placeholder="อีเมล" required>
+            <input type="password" placeholder="รหัสผ่าน" required>
+            <input type="password" placeholder="ยืนยันรหัสผ่าน" required>
+            <button class="register-btn" type="submit">สมัครสมาชิก</button>
+        </form>
+        <div class="login-link">
+            มีบัญชีอยู่แล้ว? <a href="/login">เข้าสู่ระบบ</a>
+        </div>
+    </div>
+</body>
+</html> 

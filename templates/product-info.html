@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>รายละเอียดเกม</title>
+    <link rel="stylesheet" href="/css/sb-admin-2.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #18191a 0%, #23272f 60%, #222 100%);
+            color: #f1f1f1;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            margin: 0;
+            overflow-x: hidden;
+        }
+        #particles {
+            position: fixed;
+            left: 0; top: 0; width: 100vw; height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .container {
+            max-width: 600px;
+            margin: 60px auto;
+            padding: 32px;
+            background: rgba(35,39,47,0.98);
+            border-radius: 20px;
+            box-shadow: 0 4px 32px #a084ff55, 0 0 32px #a084ff33, 0 4px 24px rgba(0,0,0,0.7);
+            position: relative;
+            z-index: 1;
+            animation: fadeInScale 0.8s cubic-bezier(.4,1.4,.6,1) 1;
+        }
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.95) translateY(40px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        h1 {
+            text-align: center;
+            color: #fff;
+            margin-bottom: 24px;
+            text-shadow: 0 2px 12px #a084ff, 0 1px 2px #fff;
+        }
+        .product-img {
+            display: block;
+            margin: 0 auto 24px auto;
+            width: 320px;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 16px;
+            box-shadow: 0 2px 16px #a084ff55, 0 2px 12px rgba(0,0,0,0.5);
+            background: #222;
+            transition: box-shadow 0.2s;
+        }
+        .product-img:hover {
+            box-shadow: 0 8px 32px #a084ffcc, 0 4px 24px #fff;
+        }
+        .info {
+            margin-bottom: 18px;
+        }
+        .label {
+            color: #b0b3b8;
+            font-size: 1rem;
+        }
+        .value {
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 24px;
+            padding: 10px 28px;
+            background: #18191a;
+            color: #fff;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.08rem;
+            box-shadow: 0 2px 8px #a084ff44, 0 0 8px #a084ff88;
+            filter: drop-shadow(0 0 8px #a084ff88);
+            transition: background 0.18s, color 0.18s, box-shadow 0.18s, filter 0.18s;
+        }
+        .back-link:hover {
+            background: linear-gradient(90deg, #fff 0%, #a084ff 100%);
+            color: #23272f;
+            box-shadow: 0 4px 16px #a084ff99, 0 0 16px #fff;
+            filter: drop-shadow(0 0 16px #fff);
+        }
+        .buy-btn {
+            display: inline-block;
+            margin-top: 18px;
+            margin-left: 12px;
+            padding: 12px 36px;
+            background: linear-gradient(90deg, #a084ff 60%, #4e73df 100%);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.15rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 2px 12px #a084ff44, 0 0 16px #a084ff88;
+            filter: drop-shadow(0 0 12px #a084ff88);
+            transition: background 0.18s, color 0.18s, box-shadow 0.18s, filter 0.18s, transform 0.18s;
+            outline: none;
+        }
+        .buy-btn:hover {
+            background: linear-gradient(90deg, #fff 0%, #a084ff 100%);
+            color: #23272f;
+            box-shadow: 0 4px 24px #a084ff99, 0 0 24px #fff;
+            filter: drop-shadow(0 0 24px #fff);
+            transform: scale(1.06) rotate(-1deg);
+        }
+    </style>
+</head>
+<body>
+    <canvas id="particles"></canvas>
+    <div class="container">
+        <h1 id="gameTitle">รายละเอียดเกม</h1>
+        <img class="product-img" id="gameImg" src="/static/img/x01.jpg" alt="Game Cover">
+        <div class="info">
+            <span class="label">ชื่อเกม:</span>
+            <span class="value" id="gameName">Resident evil 2 remake</span>
+        </div>
+        <div class="info">
+            <span class="label">ราคา:</span>
+            <span class="value">
+                <span id="marketPrice" style="color:#b0b3b8;text-decoration:line-through;font-size:0.98em;margin-right:8px;">฿1,199</span>
+                <span id="gamePrice" style="color:#a084ff;font-size:1.18em;font-weight:bold;">฿839</span>
+                <span id="saleBadge" style="background:linear-gradient(90deg,#ff5e62 0%,#ff9966 100%);color:#fff;font-size:0.95rem;font-weight:bold;padding:2px 12px;border-radius:10px;margin-left:10px;box-shadow:0 2px 8px #00000033;vertical-align:middle;display:none;">ลด 30%</span>
+            </span>
+        </div>
+        <div class="info">
+            <span class="label">รายละเอียด:</span>
+            <span class="value" id="gameDesc">เกมแอคชั่นสยองขวัญระดับตำนาน ฉบับรีเมค กราฟิกสวยสมจริง</span>
+        </div>
+        <a class="back-link" href="/products/">ย้อนกลับ</a>
+        <button class="buy-btn" onclick="alert('ระบบสาธิต: ซื้อเกมนี้สำเร็จ!')">ซื้อเกมนี้</button>
+    </div>
+    <script>
+    // Particle background (เหมือนหน้า welcome)
+    const canvas = document.getElementById('particles');
+    const ctx = canvas.getContext('2d');
+    let w = window.innerWidth, h = window.innerHeight;
+    canvas.width = w; canvas.height = h;
+    let particles = Array.from({length: 32}, () => ({
+        x: Math.random()*w,
+        y: Math.random()*h,
+        r: Math.random()*2+1,
+        dx: (Math.random()-0.5)*0.5,
+        dy: (Math.random()-0.5)*0.5,
+        o: Math.random()*0.5+0.2
+    }));
+    function drawParticles() {
+        ctx.clearRect(0,0,w,h);
+        for(const p of particles) {
+            ctx.beginPath();
+            ctx.arc(p.x,p.y,p.r,0,2*Math.PI);
+            ctx.fillStyle = `rgba(168,132,255,${p.o})`;
+            ctx.shadowColor = '#a084ff';
+            ctx.shadowBlur = 8;
+            ctx.fill();
+            ctx.shadowBlur = 0;
+        }
+    }
+    function updateParticles() {
+        for(const p of particles) {
+            p.x += p.dx; p.y += p.dy;
+            if(p.x<0||p.x>w) p.x = Math.random()*w;
+            if(p.y<0||p.y>h) p.y = Math.random()*h;
+        }
+    }
+    function animate() {
+        drawParticles();
+        updateParticles();
+        requestAnimationFrame(animate);
+    }
+    animate();
+    window.addEventListener('resize',()=>{
+        w = window.innerWidth; h = window.innerHeight;
+        canvas.width = w; canvas.height = h;
+    });
+    // ตัวอย่างข้อมูลเกม (อัปเดตราคาตาม products.html)
+    const games = [
+        {
+            img: '/static/img/x01.jpg',
+            name: 'Resident evil 2 remake',
+            market_price: '฿1,199',
+            price: '฿839',
+            desc: 'เกมแอคชั่นสยองขวัญระดับตำนาน ฉบับรีเมค กราฟิกสวยสมจริง'
+        },
+        {
+            img: '/static/img/x12.jpg',
+            name: 'Elden ring',
+            market_price: '฿1,790',
+            price: '฿1,253',
+            desc: 'เกม Open World สุดโหดจาก FromSoftware โลกกว้างและท้าทาย'
+        },
+        {
+            img: '/static/img/x13.jpg',
+            name: 'Grand theft auto 5',
+            market_price: '฿749',
+            price: '฿524',
+            desc: 'GTA V เกมแอคชั่น Open World ระดับโลก เล่นได้ทั้งเนื้อเรื่องและออนไลน์'
+        },
+        {
+            img: '/static/img/x14.jpg',
+            name: 'Core Keeper',
+            market_price: '฿289',
+            price: '฿202',
+            desc: 'เกมผจญภัยขุดเหมือง เล่นกับเพื่อนได้ สนุกไม่มีเบื่อ'
+        },
+        {
+            img: '/static/img/x15.jpg',
+            name: 'Minecraft',
+            market_price: '฿1,120',
+            price: '฿784',
+            desc: 'เกมสร้างโลกสุดฮิต เล่นได้ทั้งสร้าง-เอาตัวรอด'
+        },
+        {
+            img: '/static/img/x16.jpg',
+            name: 'Green Hell',
+            market_price: '฿369',
+            price: '฿258',
+            desc: 'เกมเอาตัวรอดในป่าอเมซอน กราฟิกสมจริง ท้าทายสุดๆ'
+        },
+        {
+            img: '/static/img/x17.jpg',
+            name: 'Prototype 2',
+            market_price: '฿699',
+            price: '฿489',
+            desc: 'เกมแอคชั่นเหนือมนุษย์ โลกเปิด มันส์สะใจ'
+        },
+        {
+            img: '/static/img/x18.jpg',
+            name: 'Death stranding',
+            market_price: '฿1,390',
+            price: '฿973',
+            desc: 'เกมเดินทาง-ส่งของสุดล้ำจาก Kojima Productions'
+        }
+    ];
+    // อ่าน id จาก query string
+    const params = new URLSearchParams(window.location.search);
+    const id = parseInt(params.get('id') || '1', 10);
+    const game = games[(id-1) % games.length];
+    if(game) {
+        document.getElementById('gameImg').src = game.img;
+        document.getElementById('gameName').textContent = game.name;
+        document.getElementById('gameTitle').textContent = game.name;
+        document.getElementById('gameDesc').textContent = game.desc;
+        document.getElementById('marketPrice').textContent = game.market_price;
+        document.getElementById('gamePrice').textContent = game.price;
+        // โชว์ป้ายลด 30% ถ้ามีราคาตลาดและราคาหลังลดต่างกัน
+        if(game.market_price !== game.price) {
+            document.getElementById('saleBadge').style.display = 'inline-block';
+        } else {
+            document.getElementById('saleBadge').style.display = 'none';
+        }
+    }
+    </script>
+</body>
+</html> 
